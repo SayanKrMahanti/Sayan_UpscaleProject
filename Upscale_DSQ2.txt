@@ -1,0 +1,85 @@
+public class Main
+{
+    public final static int R = 3;
+    public final static int C = 5;
+    
+    public static boolean isGood(int i, int j)
+    {
+        if(i>=0 && i<R && j>=0 && j<C)
+            return true;
+        return false;
+    }
+    
+    public static int rottenOranges(int arr[][])
+    {
+        boolean change=false;
+        int num=2;
+        while (true) {
+        for (int i = 0; i < R; i++) {
+            for (int j = 0; j < C; j++) {
+ 
+                if (arr[i][j] == num) {
+                    if (isGood(i + 1, j) && arr[i + 1][j] == 1) {
+                        arr[i + 1][j] = arr[i][j] + 1;
+                        change = true;
+                    }
+                    if (isGood(i, j + 1) && arr[i][j + 1] == 1) {
+                        arr[i][j + 1] = arr[i][j] + 1;
+                        change = true;
+                    }
+                    if (isGood(i - 1, j) && arr[i - 1][j] == 1) {
+                        arr[i - 1][j] = arr[i][j] + 1;
+                        change = true;
+                    }
+                    if (isGood(i, j - 1) && arr[i][j - 1] == 1) {
+                        arr[i][j - 1] = arr[i][j] + 1;
+                        change = true;
+                    }
+                }
+            }
+        }
+        if(!change)
+            break;
+        change=false;
+        num++;
+    }
+    
+    
+    return num-2;
+    }
+	public static void main(String[] args) {
+		int arr[][]={ { 2, 1, 0, 2, 1 },
+                    { 1, 0, 1, 2, 1 },
+                    { 1, 0, 0, 2, 1 } };
+        int cr=0;
+        int cf=0;
+        
+                    
+        int t=rottenOranges(arr);
+        for (int i = 0; i < R; i++) {
+            for (int j = 0; j < C; j++) {
+                System.out.print(arr[i][j]+" ");
+            }
+            System.out.println();
+        }
+        
+        for (int i = 0; i < R; i++) {
+            for (int j = 0; j < C; j++) {
+                if(arr[i][j]!=0)
+                cr++;
+                if(arr[i][j]==1)
+                cf++;
+            }
+        }
+                
+      
+	   System.out.println("time frames: "+t);
+	    
+	   
+	    System.out.println("fresh oranges: "+cf);
+	    
+        
+        System.out.println("Rotten oranges: "+cr);
+       
+	}
+}

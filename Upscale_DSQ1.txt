@@ -1,0 +1,100 @@
+
+class Node  
+{ 
+    int data; 
+    Node left;
+	Node right; 
+   
+    Node(int value)  
+    { 
+        data = value; 
+        left = null;
+		right = null; 
+    } 
+} 
+   
+class BT  
+{ 
+    Node root; 
+   
+    void displaykdistanceNodeBelow(Node node, int k)  
+    { 
+        
+        if (node == null || k < 0) 
+            return; 
+   
+        if (k == 0)  
+        { 
+            System.out.print(node.data+" "); 
+            return; 
+        } 
+   
+        displaykdistanceNodeBelow(node.left, k - 1); 
+        displaykdistanceNodeBelow(node.right, k - 1); 
+    } 
+    
+    int displaykdistanceNode(Node node, Node target, int k)  
+    { 
+       
+        if (node == null) 
+            return -1; 
+   
+        if (node == target)  
+        { 
+            displaykdistanceNodeBelow(node, k); 
+            return 0; 
+        } 
+    
+        int dleft = displaykdistanceNode(node.left, target, k); 
+    
+        if (dleft != -1)  
+        { 
+               
+            if (dleft + 1 == k)  
+            { 
+                System.out.print(node.data); 
+                System.out.println(""); 
+            } 
+               
+            else
+              displaykdistanceNodeBelow(node.right, k - dleft - 2); 
+    
+            return dleft+1; 
+        } 
+   
+        int dright = displaykdistanceNode(node.right, target, k); 
+        if (dright != -1)  
+        { 
+            if (dright + 1 == k)  
+            { 
+                System.out.print(node.data); 
+                System.out.println(""); 
+            }  
+            else 
+                displaykdistanceNodeBelow(node.left, k - dright - 2);
+				 
+            return dright+1; 
+        } 
+   
+        return -1; 
+    }
+} 
+   	public class Main
+	{
+ 
+    public static void main(String args[])  
+    { 
+        BT tree = new BT(); 
+   
+        tree.root = new Node(20); 
+        tree.root.left = new Node(8); 
+        tree.root.right = new Node(22); 
+        tree.root.left.left = new Node(4); 
+        tree.root.left.right = new Node(12); 
+        tree.root.left.right.left = new Node(10); 
+        tree.root.left.right.right = new Node(14);
+
+        Node target = tree.root.left; 
+        tree.displaykdistanceNode(tree.root, target, 2); 
+    } 
+} 
